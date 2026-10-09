@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Checkout{% endblock %}
+{% block content %}
+<section class="container section">
+  <h1 class="page-title">Checkout</h1>
+  <div class="cart-layout">
+    <form method="post" class="panel checkout-form" novalidate data-disable-on-submit>
+      {% csrf_token %}{% include '_form_errors.html' %}
+      <h2>Shipping details</h2>
+      <div class="form-grid">
+        {% for field in form %}
+          <div class="{% if field.name == 'shipping_address' %}span-2{% endif %}">{% include '_field.html' %}</div>
+        {% endfor %}
+      </div>
+      <h2>Payment method</h2>
+      <label class="pay-option"><input type="radio" checked disabled> Cash on Delivery (COD). Pay when your order arrives.</label>
+      <button class="btn btn-primary btn-lg btn-block" type="submit" data-loading-text="Placing order...">Place Order</button>
+    </form>
+    <aside class="summary">
+      <h2>Order summary</h2>
+      <ul class="summary-items">
+        {% for i in items %}<li><span>{{ i.product.name }} <small class="muted">x {{ i.quantity }}</small></span><strong>&#8377;{{ i.subtotal }}</strong></li>{% endfor %}
+      </ul>
+      <dl><dt>Subtotal</dt><dd>&#8377;{{ total }}</dd><dt>Delivery</dt><dd>Free</dd><dt class="total">Total</dt><dd class="total">&#8377;{{ total }}</dd></dl>
+      <a class="btn btn-ghost btn-block" href="{% url 'cart' %}">Edit cart</a>
+    </aside>
+  </div>
+</section>
+{% endblock %}

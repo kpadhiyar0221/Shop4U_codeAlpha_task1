@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Categories{% endblock %}
+{% block content %}
+<section class="container section">
+  <h1 class="page-title">Categories</h1>
+  <div class="grid grid-4">
+    {% for c in categories %}
+    <a class="cat-tile" href="{% url 'product_list' %}?category={{ c.pk }}">
+      <strong>{{ c.name }}</strong><span>{{ c.description|default:"Browse this category" }}</span><span class="muted small">{{ c.n }} product{{ c.n|pluralize }}</span>
+    </a>
+    {% empty %}<p class="empty">No categories yet.</p>{% endfor %}
+  </div>
+</section>
+{% endblock %}

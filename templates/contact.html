@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Contact Us{% endblock %}
+{% block content %}
+<section class="container section">
+  <h1 class="page-title">Contact us</h1>
+  <div class="cart-layout">
+    <form method="post" class="panel" novalidate data-disable-on-submit>
+      {% csrf_token %}{% include '_form_errors.html' %}
+      {% for field in form %}{% include '_field.html' %}{% endfor %}
+      <button class="btn btn-primary" type="submit" data-loading-text="Sending...">Send message</button>
+    </form>
+    <aside class="summary">
+      <h2>Get in touch</h2>
+      <dl class="details">
+        <dt>Email</dt><dd>support@shop4u.example</dd>
+        <dt>Phone</dt><dd>+91 98765 43210</dd>
+        <dt>Address</dt><dd>12 Market Road, Rajkot, Gujarat, India</dd>
+        <dt>Hours</dt><dd>Mon-Sat, 9 am - 7 pm</dd>
+      </dl>
+    </aside>
+  </div>
+</section>
+{% endblock %}

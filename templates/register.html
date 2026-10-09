@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<section class="container section auth-wrap">
+  <div class="auth-card">
+    <h1>Create your account</h1>
+    <form method="post" novalidate>
+      {% csrf_token %}{% include '_form_errors.html' %}
+      {% for field in form %}{% include '_field.html' %}{% endfor %}
+      <button class="btn btn-primary btn-block" type="submit">Register</button>
+    </form>
+    <p class="auth-alt">Already have an account? <a href="{% url 'login' %}">Login</a></p>
+  </div>
+</section>
+{% endblock %}

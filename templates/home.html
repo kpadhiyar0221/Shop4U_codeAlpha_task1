@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="container hero-inner">
+    <div>
+      <h1>Discover Products You'll Love</h1>
+      <p>Electronics, fashion, home and accessories, all in one place. Simple prices, quick checkout and cash on delivery.</p>
+      <a class="btn btn-primary btn-lg" href="{% url 'product_list' %}">Shop Now</a>
+      <a class="btn btn-light btn-lg" href="{% url 'categories' %}">Browse categories</a>
+    </div>
+    <ul class="hero-points">
+      <li><svg class="icon"><use href="#i-truck"/></svg> Cash on delivery</li>
+      <li><svg class="icon"><use href="#i-shield"/></svg> Secure accounts</li>
+      <li><svg class="icon"><use href="#i-heart"/></svg> Easy order tracking</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section container">
+  <div class="section-head"><h2>Featured products</h2><a href="{% url 'product_list' %}?sort=price_desc">View all</a></div>
+  {% if featured %}<div class="grid">{% for p in featured %}{% include '_product_card.html' %}{% endfor %}</div>
+  {% else %}<p class="empty">No products yet. Run <code>python manage.py load_sample_data</code> or add some in the admin.</p>{% endif %}
+</section>
+
+<section class="section container">
+  <div class="section-head"><h2>Popular categories</h2><a href="{% url 'categories' %}">All categories</a></div>
+  <div class="grid grid-4">
+    {% for c in categories %}
+    <a class="cat-tile" href="{% url 'product_list' %}?category={{ c.pk }}">
+      <strong>{{ c.name }}</strong><span>{{ c.n }} product{{ c.n|pluralize }}</span>
+    </a>{% endfor %}
+  </div>
+</section>
+
+<section class="section container">
+  <div class="promo">
+    <div><h2>Free delivery on your first order</h2><p>Create an account today and pay when your parcel arrives.</p></div>
+    <a class="btn btn-primary btn-lg" href="{% if user.is_authenticated %}{% url 'product_list' %}{% else %}{% url 'register' %}{% endif %}">{% if user.is_authenticated %}Start shopping{% else %}Create account{% endif %}</a>
+  </div>
+</section>
+
+<section class="section container">
+  <div class="section-head"><h2>New arrivals</h2><a href="{% url 'product_list' %}">Shop all</a></div>
+  {% if new_arrivals %}<div class="grid">{% for p in new_arrivals %}{% include '_product_card.html' %}{% endfor %}</div>
+  {% else %}<p class="empty">New products are coming soon.</p>{% endif %}
+</section>
+{% endblock %}

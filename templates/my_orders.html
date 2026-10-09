@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}My Orders{% endblock %}
+{% block content %}
+<section class="container section">
+  <h1 class="page-title">My orders</h1>
+  {% if orders %}
+  <div class="panel table-wrap">
+    <table class="table">
+      <thead><tr><th>Order</th><th>Date</th><th>Items</th><th>Total</th><th>Status</th><th><span class="sr-only">Details</span></th></tr></thead>
+      <tbody>
+      {% for o in orders %}
+        <tr><td data-label="Order">{{ o.order_number }}</td><td data-label="Date">{{ o.created_at|date:"d M Y" }}</td><td data-label="Items">{{ o.item_count }}</td><td data-label="Total">&#8377;{{ o.total_amount }}</td>
+        <td data-label="Status"><span class="status status-{{ o.status|lower }}">{{ o.status }}</span></td>
+        <td><a class="btn btn-outline btn-sm" href="{% url 'order_detail' o.order_number %}">View details</a></td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty"><h2>No orders yet</h2><p>When you place an order it will show up here.</p><a class="btn btn-primary" href="{% url 'product_list' %}">Start shopping</a></div>
+  {% endif %}
+</section>
+{% endblock %}

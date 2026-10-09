@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<section class="container section auth-wrap">
+  <div class="auth-card">
+    <h1>Login</h1>
+    <p class="muted">Welcome back. Log in to check out and see your orders.</p>
+    <form method="post" novalidate>
+      {% csrf_token %}{% include '_form_errors.html' %}
+      <input type="hidden" name="next" value="{{ next }}">
+      {% for field in form %}{% include '_field.html' %}{% endfor %}
+      <button class="btn btn-primary btn-block" type="submit">Login</button>
+    </form>
+    <p class="auth-alt">New to Shop4U? <a href="{% url 'register' %}">Create an account</a></p>
+  </div>
+</section>
+{% endblock %}

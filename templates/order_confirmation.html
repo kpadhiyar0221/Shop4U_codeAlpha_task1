@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Order Confirmed{% endblock %}
+{% block content %}
+<section class="container section">
+  <div class="confirm">
+    <svg class="icon confirm-icon"><use href="#i-check"/></svg>
+    <h1>Thank you, your order is placed!</h1>
+    <p>Your order number is <strong>{{ order.order_number }}</strong>. A confirmation has been saved to your account.</p>
+  </div>
+  {% include '_order_summary.html' %}
+  <p class="center" style="margin-top:2rem"><a class="btn btn-primary" href="{% url 'my_orders' %}">View my orders</a> <a class="btn btn-ghost" href="{% url 'product_list' %}">Continue shopping</a></p>
+</section>
+{% endblock %}

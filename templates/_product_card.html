@@ -1,0 +1,19 @@
+<article class="card product-card">
+  <a class="card-img" href="{% url 'product_detail' p.pk %}" tabindex="-1" aria-hidden="true">
+    {% if p.image %}<img src="{{ p.image.url }}" alt="" loading="lazy">{% else %}<div class="img-fallback">No image</div>{% endif %}
+    {% if not p.in_stock %}<span class="tag tag-out">Out of stock</span>{% elif p.low_stock %}<span class="tag tag-low">Only {{ p.stock_quantity }} left</span>{% endif %}
+  </a>
+  <div class="card-body">
+    <span class="muted small">{{ p.category.name }}</span>
+    <h3><a href="{% url 'product_detail' p.pk %}">{{ p.name }}</a></h3>
+    <p class="price">&#8377;{{ p.price }}</p>
+    <p class="small {% if p.in_stock %}ok{% else %}bad{% endif %}">{% if p.in_stock %}In stock ({{ p.stock_quantity }}){% else %}Out of stock{% endif %}</p>
+    <div class="card-actions">
+      <a class="btn btn-outline btn-sm" href="{% url 'product_detail' p.pk %}">View Details</a>
+      <form method="post" action="{% url 'cart_add' p.pk %}">
+        {% csrf_token %}<input type="hidden" name="quantity" value="1"><input type="hidden" name="next" value="{{ request.get_full_path }}">
+        <button class="btn btn-primary btn-sm" type="submit" {% if not p.in_stock %}disabled{% endif %}>Add to Cart</button>
+      </form>
+    </div>
+  </div>
+</article>

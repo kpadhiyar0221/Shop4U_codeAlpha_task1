@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}About Us{% endblock %}
+{% block content %}
+<section class="container section narrow">
+  <h1 class="page-title">About Shop4U</h1>
+  <p class="lead">Shop4U is a friendly online store built to make everyday shopping simple. We bring together useful electronics, comfortable fashion, home essentials and handy accessories at honest prices.</p>
+  <div class="grid grid-3" style="margin:2rem 0">
+    <div class="panel"><svg class="icon icon-lg orange"><use href="#i-bag"/></svg><h3>Curated range</h3><p>Every product is picked for quality and value, with clear descriptions and real stock counts.</p></div>
+    <div class="panel"><svg class="icon icon-lg orange"><use href="#i-truck"/></svg><h3>Pay on delivery</h3><p>No card needed. Order online and pay in cash when your parcel arrives.</p></div>
+    <div class="panel"><svg class="icon icon-lg orange"><use href="#i-shield"/></svg><h3>Safe accounts</h3><p>Passwords are securely hashed and your order history stays private to you.</p></div>
+  </div>
+  <h2>Our story</h2>
+  <p>Shop4U started as a college project with one goal: show how a modern, honest store can be built from the ground up. Today it serves as a complete demo of browsing, carts, accounts, checkout and order management.</p>
+  <p><a class="btn btn-primary" href="{% url 'product_list' %}">Explore the shop</a> <a class="btn btn-ghost" href="{% url 'contact' %}">Get in touch</a></p>
+</section>
+{% endblock %}

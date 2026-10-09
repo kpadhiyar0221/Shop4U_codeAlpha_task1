@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Shop{% endblock %}
+{% block content %}
+<section class="container section">
+  <h1 class="page-title">{% if selected_category %}{{ selected_category.name }}{% else %}All products{% endif %}</h1>
+  <form class="filters" method="get" action="{% url 'product_list' %}">
+    <div class="form-group"><label for="q">Search</label><input id="q" type="search" name="q" value="{{ q }}" placeholder="Product name"></div>
+    <div class="form-group"><label for="category">Category</label>
+      <select id="category" name="category">
+        <option value="">All categories</option>
+        {% for c in categories %}<option value="{{ c.pk }}" {% if selected_category and selected_category.pk == c.pk %}selected{% endif %}>{{ c.name }}</option>{% endfor %}
+      </select></div>
+    <div class="form-group"><label for="sort">Sort by</label>
+      <select id="sort" name="sort">
+        <option value="">Newest first</option>
+        <option value="price_asc" {% if sort == 'price_asc' %}selected{% endif %}>Price: low to high</option>
+        <option value="price_desc" {% if sort == 'price_desc' %}selected{% endif %}>Price: high to low</option>
+      </select></div>
+    <div class="filter-buttons"><button class="btn btn-primary" type="submit">Apply</button><a class="btn btn-ghost" href="{% url 'product_list' %}">Clear</a></div>
+  </form>
+
+  <p class="muted">{{ page.paginator.count }} product{{ page.paginator.count|pluralize }} found</p>
+  {% if page.object_list %}
+    <div class="grid">{% for p in page.object_list %}{% include '_product_card.html' %}{% endfor %}</div>
+    {% if page.has_other_pages %}
+    <nav class="pagination" aria-label="Pagination">
+      {% if page.has_previous %}<a class="btn btn-outline btn-sm" href="?{% if querystring %}{{ querystring }}&amp;{% endif %}page={{ page.previous_page_number }}">Previous</a>{% endif %}
+      <span>Page {{ page.number }} of {{ page.paginator.num_pages }}</span>
+      {% if page.has_next %}<a class="btn btn-outline btn-sm" href="?{% if querystring %}{{ querystring }}&amp;{% endif %}page={{ page.next_page_number }}">Next</a>{% endif %}
+    </nav>{% endif %}
+  {% else %}
+    <div class="empty"><h2>No products found</h2><p>Try a different search word or clear the filters.</p><a class="btn btn-primary" href="{% url 'product_list' %}">Show all products</a></div>
+  {% endif %}
+</section>
+{% endblock %}
